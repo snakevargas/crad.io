@@ -8,7 +8,7 @@ import (
 )
 
 type CradController struct {
-	Crads map[string]Crad
+	Crads map[string]*Crad
 	Cmcs  map[float64][]*Crad
 }
 
