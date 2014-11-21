@@ -33,15 +33,16 @@ func GetCrads() (map[string]Crad, map[float64][]*Crad) {
 	}
 
 	// now we need to parse each field!
-	cmcs := indexCmc(&crads)
+	cmcs := indexCmc(crads)
 
 	return crads, cmcs
 }
 
-func indexCmc(crads *map[string]Crad) map[float64][]*Crad {
+func indexCmc(crads map[string]Crad) map[float64][]*Crad {
 	cmcs := make(map[float64][]*Crad)
-	for _, crad := range *crads {
-		cmcs[crad.Cmc] = append(cmcs[crad.Cmc], &crad)
+	for key, crad := range crads {
+		actualCrad := crads[key]
+		cmcs[crad.Cmc] = append(cmcs[crad.Cmc], &actualCrad)
 	}
 
 	return cmcs
