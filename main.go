@@ -30,7 +30,7 @@ func main() {
 
 	router.GET("/cmcs/:cmc", cc.Cmc)
 
-	fmt.Printf("%#v", cmcs[1])
+	// fmt.Printf("%#v", cmcs[1])
 
 	log.Fatal(http.ListenAndServe(":8080", router))
 

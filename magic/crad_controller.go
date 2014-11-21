@@ -5,11 +5,12 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"strconv"
+	"fmt"
 )
 
 type CradController struct {
 	Crads map[string]Crad
-	Cmcs  map[float64][]*Crad
+	Cmcs  map[float64][]Crad
 }
 
 func (cc *CradController) Cmc(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
@@ -19,6 +20,7 @@ func (cc *CradController) Cmc(w http.ResponseWriter, r *http.Request, ps httprou
 
 	cmc, err := strconv.ParseFloat(cmcString, 64)
 
+	fmt.Printf("%#v", cmc)
 
 	crads, ok := cc.Cmcs[cmc]
 

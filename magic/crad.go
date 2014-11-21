@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"fmt"
 )
 
 type Crad struct {
-	Cmc        float64  `json:"cmc"`
 	Name       string   `json:"name"`
 	ManaCost   string   `json:"manaCost"`
 	Colors     []string `json:"colors"`
@@ -17,9 +17,10 @@ type Crad struct {
 	Supertypes []string `json:"supertypes"`
 	Types      []string `json:"types"`
 	Subtypes   []string `json:"subtypes"`
+	Cmc        float64  `json:"cmc"`
 }
 
-func GetCrads() (map[string]Crad, map[float64][]*Crad) {
+func GetCrads() (map[string]Crad, map[float64][]Crad) {
 	cradList, err := ioutil.ReadFile("./AllCards-x.json")
 	if err != nil {
 		log.Fatal("opening config file", err.Error())
@@ -33,15 +34,19 @@ func GetCrads() (map[string]Crad, map[float64][]*Crad) {
 	}
 
 	// now we need to parse each field!
-	cmcs := indexCmc(&crads)
+	cmcs := indexCmc(crads)
 
 	return crads, cmcs
 }
 
-func indexCmc(crads *map[string]Crad) map[float64][]*Crad {
-	cmcs := make(map[float64][]*Crad)
-	for _, crad := range *crads {
-		cmcs[crad.Cmc] = append(cmcs[crad.Cmc], &crad)
+func indexCmc(crads map[string]Crad) map[float64][]Crad {
+	cmcs := make(map[float64][]Crad)
+	for _, crad := range crads {
+		cmcs[crad.Cmc] = append(cmcs[crad.Cmc], crad)
+		// fmt.Printf("CRAD: %#v", crad.Cmc)
+	}
+	for _, cmcNew := range cmcs {
+		fmt.Printf("CRADS: %#v", cmcNew)
 	}
 
 	return cmcs
